@@ -6,8 +6,6 @@ Este proyecto es una demostración de una aplicación web instrumentada con Open
 
 La arquitectura del proyecto está basada en microservicios y sigue las mejores prácticas de observabilidad, implementando los tres pilares fundamentales: métricas, trazas y logs.
 
-![Arquitectura](https://miro.medium.com/v2/resize:fit:1400/1*Vth3UENwIf4bQRgNVEGgug.png)
-
 La arquitectura se compone de:
 
 1. **Capa de Aplicación**:
