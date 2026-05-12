@@ -1,14 +1,11 @@
-# Guía de Telemetría y Observabilidad: Demo Grafana & Prometheus
-
-Este repositorio contiene una implementación de referencia diseñada para el estudio de sistemas de observabilidad modernos. El proyecto demuestra la integración de una arquitectura web (Frontend Angular y Backend Node.js) con un stack de telemetría basado en estándares abiertos (OpenTelemetry).
+# Telemetría y observabilidad: Grafana & Prometheus
 
 ## Fundamentos del Proyecto
 
 ### ¿Por qué Observabilidad?
-En el contexto de sistemas distribuidos, la **observabilidad** es la medida de qué tan bien se puede entender el estado interno de un sistema a partir de los datos que genera (salidas). A diferencia del monitoreo tradicional, que se enfoca en "qué está fallando", la observabilidad permite entender "por qué está fallando" mediante la correlación de datos.
+La **observabilidad** es la medida de qué tan bien se puede entender el estado interno de un sistema a partir de los datos que genera (salidas). A diferencia del monitoreo tradicional, que se enfoca en "qué está fallando", la observabilidad permite entender "por qué está fallando" mediante la correlación de datos.
 
 ### Las Tres vías de DevOps y Telemetría
-Este proyecto se alinea con los principios fundamentales de DevOps:
 
 1.  **La Primera Vía (Flujo)**: La telemetría permite visualizar el flujo de valor desde el desarrollo hasta la operación, identificando cuellos de botella en la infraestructura y la lógica de negocio.
 2.  **La Segunda Vía (Retroalimentación)**: Los dashboards y alertas proporcionan ciclos de retroalimentación rápidos. Al observar el comportamiento en tiempo real, se pueden corregir errores antes de que afecten a la totalidad de los usuarios.
@@ -16,14 +13,12 @@ Este proyecto se alinea con los principios fundamentales de DevOps:
 
 ## Arquitectura del Sistema
 
-El sistema se organiza en capas para facilitar su comprensión y escalabilidad:
-
-1.  **ßAplicación**:
+1.  **Aplicación**:
     *   **Frontend (Angular)**: Interfaz de usuario que genera eventos de navegación y peticiones asíncronas.
     *   **Backend (Node.js/Express)**: API que procesa la lógica y gestiona los datos.
-2.  **ßInstrumentación (OpenTelemetry)**:
+2.  **Instrumentación (OpenTelemetry)**:
     *   Actúa como un estándar neutral que recolecta **Métricas, Trazas y Logs**. Al usar OpenTelemetry, se evita el "vendor lock-in", permitiendo cambiar el sistema de almacenamiento sin modificar el código de la aplicación.
-3.  **ßAlmacenamiento y Visualización**:
+3.  **Almacenamiento y Visualización**:
     *   **Prometheus**: Base de datos de series temporales optimizada para métricas.
     *   **Jaeger**: Motor de búsqueda y visualización de trazas distribuidas para entender el camino de una petición.
     *   **Loki**: Sistema de agregación de logs que utiliza las mismas etiquetas que Prometheus, facilitando la correlación.
@@ -31,7 +26,7 @@ El sistema se organiza en capas para facilitar su comprensión y escalabilidad:
 
 ## Distribución de Datos y Latencia
 
-En la telemetría de rendimiento, el uso de promedios aritméticos suele ser engañoso para la toma de decisiones. Este proyecto implementa **Histogramas** para capturar la distribución real de la latencia.
+En la telemetría de rendimiento, el uso de promedios aritméticos suele ser engañoso para la toma de decisiones. Se utilizan **Histogramas** para capturar la distribución real de la latencia.
 
 ### El Riesgo del promedio aritmético
 Supongamos que un servicio recibe 10 solicitudes:
@@ -42,7 +37,7 @@ El **promedio aritmético** sería: `(9 * 100 + 5000) / 10 = 590ms`.
 *   El promedio de 590ms no representa a ninguno de los dos grupos. Para el 90% de los usuarios el sistema es rapidísimo, mientras que para el 10% es inaceptablemente lento. Un administrador podría pensar que "todo va un poco lento" y optimizar el código general, cuando el problema real es un caso de borde (edge case) que requiere una solución específica.
 
 ### Conceptos Estadísticos Aplicados
-*   **Distribución de "Cola Larga"**: El tráfico web no suele seguir una distribución normal. Frecuentemente presenta una cola larga donde una pequeña fracción de usuarios experimenta latencias desproporcionadamente altas.
+*   **Distribución Asimétrica**: El tráfico web no suele seguir una distribución normal. Frecuentemente presenta una cola larga donde una pequeña fracción de usuarios experimenta latencias desproporcionadamente altas.
 *   **Percentiles (p50, p90, p99)**:
     *   **p50 (Mediana)**: El tiempo que experimenta el usuario típico (en el ejemplo anterior, sería 100ms).
     *   **p99**: El tiempo que experimenta el 1% de los usuarios con peor rendimiento. Es crítico para identificar problemas de infraestructura.
