@@ -7,7 +7,7 @@ Este repositorio contiene una implementación de referencia diseñada para el es
 ### ¿Por qué Observabilidad?
 En el contexto de sistemas distribuidos, la **observabilidad** es la medida de qué tan bien se puede entender el estado interno de un sistema a partir de los datos que genera (salidas). A diferencia del monitoreo tradicional, que se enfoca en "qué está fallando", la observabilidad permite entender "por qué está fallando" mediante la correlación de datos.
 
-### Las Tres Vías de DevOps y la Telemetría
+### Las Tres vías de DevOps y Telemetría
 Este proyecto se alinea con los principios fundamentales de DevOps:
 
 1.  **La Primera Vía (Flujo)**: La telemetría permite visualizar el flujo de valor desde el desarrollo hasta la operación, identificando cuellos de botella en la infraestructura y la lógica de negocio.
@@ -29,7 +29,7 @@ El sistema se organiza en capas para facilitar su comprensión y escalabilidad:
     *   **Loki**: Sistema de agregación de logs que utiliza las mismas etiquetas que Prometheus, facilitando la correlación.
     *   **Grafana**: Orquestador visual que unifica todas las fuentes de datos en una sola interfaz.
 
-## Justificación Matemática: Distribución de Datos y Latencia
+## Distribución de Datos y Latencia
 
 En la telemetría de rendimiento, el uso de promedios aritméticos suele ser engañoso para la toma de decisiones. Este proyecto implementa **Histogramas** para capturar la distribución real de la latencia.
 
@@ -48,7 +48,7 @@ El **promedio aritmético** sería: `(9 * 100 + 5000) / 10 = 590ms`.
     *   **p99**: El tiempo que experimenta el 1% de los usuarios con peor rendimiento. Es crítico para identificar problemas de infraestructura.
 *   **Buckets de Histograma**: Prometheus almacena las métricas en "baldes" de rangos de tiempo. Esto permite calcular percentiles de forma eficiente sin necesidad de procesar cada petición individual en tiempo real.
 
-## Dashboard de Monitoreo
+## Dashboard
 
 El dashboard de Grafana (`Demo App Dashboard`) permite ver:
 
@@ -58,7 +58,7 @@ El dashboard de Grafana (`Demo App Dashboard`) permite ver:
 *   **Distribución de Códigos de Estado**: Gráfico de torta que permite identificar rápidamente la proporción de éxitos (2xx) vs errores (4xx, 5xx).
 *   **Uso de Memoria**: Monitor de recursos del proceso Node.js (Resident Set Size).
 
-## Componentes Técnicos
+## Componentes
 
 | Componente | Justificación Técnica |
 | :--- | :--- |
@@ -67,11 +67,7 @@ El dashboard de Grafana (`Demo App Dashboard`) permite ver:
 | **Loki** | A diferencia de otros sistemas, no indexa el contenido del log, sino las etiquetas (metadata). Esto reduce drásticamente el uso de memoria y disco. |
 | **OpenTelemetry SDK** | Proporciona instrumentación automática para librerías comunes (como Express o Fetch), reduciendo el esfuerzo manual del desarrollador. |
 
-## Instrucciones de Ejecución
-
-### Requisitos
-*   Docker y Docker Compose.
-*   Navegador web moderno.
+## Ejecución
 
 ### Despliegue
 1.  **Iniciar servicios**:
@@ -83,11 +79,11 @@ El dashboard de Grafana (`Demo App Dashboard`) permite ver:
     *   **Grafana**: [http://localhost:3001](http://localhost:3001) (Credenciales: `admin`/`admin`)
     *   **Jaeger**: [http://localhost:16686](http://localhost:16686)
 
-### Generación de Telemetría para Análisis
-Para observar datos significativos, se recomienda realizar las siguientes acciones en la aplicación:
+### Generación de telemetria
+
 1.  Navegar entre secciones para generar trazas de carga de página.
 2.  Crear y eliminar elementos para observar métricas de operaciones de negocio.
 3.  Acceder a la ruta de error ([http://localhost:3000/error](http://localhost:3000/error)) para visualizar cómo se reportan las excepciones en los logs y trazas de forma correlacionada.
 
 ## Retroalimentación y Mejora
-El análisis de estos datos permite implementar una cultura de **SRE (Site Reliability Engineering)**, definiendo SLOs (Objetivos de Nivel de Servicio) basados en los datos reales recolectados por este stack.
+El análisis de estos datos permite implementar una cultura de **SRE (Site Reliability Engineering)**, definiendo SLOs basados en los datos reales recolectados por este stack.
