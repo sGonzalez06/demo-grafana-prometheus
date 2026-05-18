@@ -6,8 +6,8 @@ import { TracingService } from '../../telemetry/tracing.service';
   selector: 'app-home',
   template: `
     <div class="container">
-      <h1>Bienvenido a la Demo de Grafana y Prometheus</h1>
-      <p class="lead">Esta aplicación demuestra la integración de OpenTelemetry con Angular para monitoreo con Grafana y Prometheus.</p>
+      <h1>Bienvenido!</h1>
+      <p class="lead">Esta aplicación integra OpenTelemetry con Angular para monitoreo con Grafana y Prometheus.</p>
       
       <div class="row mt-4">
         <div class="col-md-6">
